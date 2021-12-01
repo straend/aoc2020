@@ -4,6 +4,8 @@ use std::io;
 
 // import each day with mod dayX;
 mod day0;
+mod day1;
+
 
 fn main() -> io::Result<()> {
     let day = std::env::args().nth(1).expect("No day given");
@@ -11,6 +13,7 @@ fn main() -> io::Result<()> {
         0 => day0::run()?,
         // Add a match for each day
         // N   =>  dayN::run()?,
+        1 => day1::run()?,
 
         _ => println!("Not implemented")
     }
