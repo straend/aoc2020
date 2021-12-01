@@ -2,6 +2,7 @@
 
 use std::io;
 
+mod helpers;
 // import each day with mod dayX;
 mod day0;
 mod day1;
