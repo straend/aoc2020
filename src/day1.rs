@@ -1,6 +1,6 @@
 use std::io;
-use std::fs::File;
-use std::io::{BufRead, BufReader};
+
+use crate::helpers;
 
 #[cfg(test)]
 mod tests {
@@ -32,11 +32,7 @@ pub fn nr_of_increased_averaged(values: &Vec<i64>) -> i64 {
 
 pub fn run() -> io::Result<()> {
     println!("\n\nDay 1");
-    let file = File::open("inputs/day1.txt").expect("Could not open");
-    let reader = BufReader::new(file);
-    let lines = reader.lines()
-        .map(|x| match x {Ok(d) => d.parse::<i64>().unwrap(), Err(e)=>panic!("{:?}", e)}).collect::<Vec<i64>>();
-
+    let lines = helpers::read_file_to_vec::<i64>("inputs/day1.txt");
     let part1 = nr_of_increased(&lines);
     println!("Part 1:\t {}", part1);
 
