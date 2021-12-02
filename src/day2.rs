@@ -64,29 +64,27 @@ impl FromStr for Instruction {
 }
 
 fn calc_position(input: &Vec<Instruction>) -> Point {
-    let mut res = Point{x:0, y:0};
-    for x in input {
+    input.iter().fold(Point{x:0, y: 0}, |mut acc, x| {
         match x.direction {
-            Direction::Forward => res.x += x.steps,
-            Direction::Down => res.y += x.steps,
-            Direction::Up => res.y -= x.steps,
+            Direction::Forward => acc.x += x.steps,
+            Direction::Down => acc.y += x.steps,
+            Direction::Up => acc.y -= x.steps,
         };
-    }
-    res
+        acc
+    })
 }
 fn calc_position2(input: &Vec<Instruction>) -> Point2 {
-    let mut res = Point2{x: 0, y: 0, aim: 0};
-    for x in input {
+    input.iter().fold(Point2{x:0, y: 0, aim: 0}, |mut acc, x| {
         match x.direction {
             Direction::Forward => {
-                res.x += x.steps;
-                res.y += res.aim * x.steps;
+                acc.x += x.steps;
+                acc.y += acc.aim * x.steps;
             },
-            Direction::Down => res.aim += x.steps,
-            Direction::Up => res.aim -= x.steps,
+            Direction::Down => acc.aim += x.steps,
+            Direction::Up => acc.aim -= x.steps,
         };
-    }
-    res
+        acc
+    })
 }
 
 #[cfg(test)]
