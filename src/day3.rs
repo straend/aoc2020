@@ -30,15 +30,13 @@ mod tests {
 
 fn get_gamma_epsilon(inp: &Vec<String>) -> (u64, u64) {
 
-    let mut gamma = String::with_capacity(inp[0].len());
-    let mut epsilon = String::with_capacity(inp[0].len());
 
-    for i in 0..inp[0].len() {
-        let ones:usize = inp.iter().fold(0, |acc, x| if x.chars().nth(i).unwrap()=='1' {acc+1} else {acc});
-        let zeroes = inp.len()-ones;
-        gamma.push(if ones >= zeroes {'1'} else {'0'});
-        epsilon.push(if zeroes >= ones {'1'} else {'0'});
-    }
+    let v: Vec<char> = vec!['0'; inp[0].len()];
+    let t:Vec<usize> = v.iter().enumerate().map(|(i, _)| inp.iter().fold(0, |acc, x| if x.chars().nth(i).unwrap()=='1' {acc+1} else {acc})).collect();
+    let wx = inp.len()/2;
+
+    let gamma:String   = t.iter().map(|&x| if x >= wx {'1'} else {'0'} ).collect::<Vec<char>>().iter().collect();
+    let epsilon:String = t.iter().map(|&x| if x  > wx {'0'} else {'1'} ).collect::<Vec<char>>().iter().collect();
 
     (u64::from_str_radix(&gamma, 2).unwrap(), u64::from_str_radix(&epsilon, 2).unwrap())
 }
