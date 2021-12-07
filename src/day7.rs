@@ -18,9 +18,7 @@ mod tests {
     fn fuel_proportional() {
         let lines:Vec<i32> = vec![16,1,2,0,4,2,7,1,2,14];
 
-        // Somethings wrong here, docs says it should be 168
-        // my fuel_calculator says 170, and gives correct for "real" problem
-        assert_eq!(fuel_required_proportional(&lines), 170);
+        assert_eq!(fuel_required_proportional(&lines), 168);
     }
 }
 
@@ -32,9 +30,17 @@ fn fuel_required_1_per_step(inp: &Vec<i32>) -> i32 {
 
 fn fuel_required_proportional(inp: &Vec<i32>) -> i32 {
     let mean = helpers::mean(&inp).floor() as i32;
+
     let steps_required:Vec<i32> = inp.iter().map(|x| (mean - x).abs()).collect();
     // x*(x+1) / 2 == sum of all integers from 1 to x
-    steps_required.iter().map(|&x| x*(x+1) / 2).sum::<i32>()
+    let floored = steps_required.iter().map(|&x| x*(x+1) / 2).sum::<i32>();
+
+    let steps_required2:Vec<i32> = inp.iter().map(|x| (mean+1 - x).abs()).collect();
+    let ceiled = steps_required2.iter().map(|&x| x*(x+1) / 2).sum::<i32>();
+    match ceiled < floored {
+        true => ceiled,
+        _ => floored,
+    }
 }
 
 pub fn run() -> io::Result<()> {
