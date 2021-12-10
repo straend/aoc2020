@@ -13,6 +13,7 @@ mod day5;
 mod day6;
 mod day7;
 mod day8;
+mod day9;
 mod day10;
 
 
@@ -30,6 +31,7 @@ fn main() -> io::Result<()> {
         6 => day6::run()?,
         7 => day7::run()?,
         8 => day8::run()?,
+        9 => day9::run()?,
         10 => day10::run()?,
 
         _ => println!("Not implemented")
