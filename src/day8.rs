@@ -98,7 +98,7 @@ fn get_seven_output(input: &str, out: &str) -> u32 {
 }
 
 pub fn run() -> io::Result<()> {
-    println!("\n\nDay 7");
+    println!("\n\nDay 8");
     let lines = helpers::read_file_to_vec::<String>("inputs/day8.txt");
     let x:Vec<Vec<&str>> = lines.iter().map(|x| x.split("|").collect::<Vec<&str>>()).collect();
     let out:Vec<&str> = x.iter().map(|x| x[1].trim()).collect();
