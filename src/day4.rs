@@ -2,11 +2,6 @@ use std::io;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-}
-
 fn printboard<> (board: &Vec<(&u64, bool)>) {
     for (i, (&x, b)) in board.iter().enumerate() {
         if i > 0 && i % 5 == 0 {println!("");}
@@ -21,23 +16,17 @@ fn printboard<> (board: &Vec<(&u64, bool)>) {
 
 fn checkboard<> (board: &Vec<(&u64, bool)>) -> bool {
 
-    // Check if rows are winning
+    // Check if rows are winning, we take chunks of 5 == one row
     let rows = board.chunks(5).map(|row| row.iter().filter( |(_v, k)| k==&true).count()).collect::<Vec<usize>>();
+    // Then we check if some of theese sums up to 5
     if rows.iter().max() == Some(&5_usize) {
         return true
     }
 
-    // Check if cols are winning
-    let c1:bool = board.iter().skip(0).step_by(5).take(5).filter(|(_v,k)| k==&true).count() >= 5;
-    if c1 { return true }
-    let c2:bool = board.iter().skip(1).step_by(5).take(5).filter(|(_v,k)| k==&true).count() >= 5;
-    if c2 { return true }
-    let c3:bool = board.iter().skip(2).step_by(5).take(5).filter(|(_v,k)| k==&true).count() >= 5;
-    if c3 { return true }
-    let c4:bool = board.iter().skip(3).step_by(5).take(5).filter(|(_v,k)| k==&true).count() >= 5;
-    if c4 { return true }
-    let c5:bool = board.iter().skip(4).step_by(5).take(5).filter(|(_v,k)| k==&true).count() >= 5;
-    if c5 { return true }
+    for i in 0..5 {
+        let c1:bool = board.iter().skip(i).step_by(5).take(5).filter(|(_v,k)| k==&true).count() >= 5;
+        if c1 { return true }
+    }
 
     false
 }
